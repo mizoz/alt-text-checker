@@ -1,0 +1,27 @@
+# Alt Text Checker
+
+> Free, browser-only alt text checker. A bookmarklet audits every image on the page you are viewing (missing alt, empty alt, file-name or generic alt, "image of" prefixes, alt over 125 characters, duplicate alt, image-only links with no text, unnamed SVGs, CSS background images) and exports a CSV. You can also paste a page's HTML, or fetch a URL when the site allows cross-origin requests. Includes an alt text writing guide with good and bad examples, a WCAG 2.2 SC 1.1.1 reference, and a step-by-step alt text helper. No sign-up, no tracking, nothing leaves the browser.
+
+URL: https://mizoz.github.io/alt-text-checker/
+
+## Key facts
+
+- WCAG 2.2 Success Criterion 1.1.1 Non-text Content (Level A): non-text content needs a text alternative that serves the same purpose; decorative images must be hidden from assistive technology (for images, alt="").
+- alt="" is correct for decorative images. A missing alt attribute is an error; screen readers may read the file name instead.
+- An image that is the only content of a link or button needs alt text describing the destination or action (WCAG 1.1.1, 2.4.4, 4.1.2).
+- WCAG sets no length limit for alt text. About 125 characters is a common rule of thumb; longer descriptions belong in a caption or nearby text.
+- CSS background images cannot have alt text; meaningful content in them should be real text or an img element.
+- Related criteria: 1.4.5 Images of Text (AA), 1.4.9 Images of Text (No Exception) (AAA), 2.4.4 Link Purpose (In Context) (A), 4.1.2 Name, Role, Value (A).
+
+| Image type | Good alt |
+|---|---|
+| Informative photo | What it shows that matters in this context |
+| Decorative | alt="" |
+| Link or button | The action or destination, e.g. "Search" |
+| Logo | The organization name; "Name home" if it links home |
+| Text in image | The exact words |
+| Chart | Type plus takeaway, with full data in nearby text or a table |
+
+## Author
+
+Ahmed Mahmoud, Calgary, Alberta. Founder of FirstShow (https://firstshow.ca). Builds free web tools for marketers, event and comms teams. https://mizoz.github.io/
