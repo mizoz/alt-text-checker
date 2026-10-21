@@ -1,6 +1,6 @@
 # Alt Text Checker
 
-**Live:** https://mizoz.github.io/alt-text-checker/
+**Live:** https://lab.zalastack.com/alt-text-checker/
 
 ![Alt text checker screenshot](docs/screenshot.png)
 

@@ -203,7 +203,7 @@
   $('load-example').addEventListener('click', function () {
     htmlIn.value = [
       '<header>',
-      '  <a href="/"><img src="https://mizoz.github.io/alt-text-checker/favicon.svg" alt="logo"></a>',
+      '  <a href="/"><img src="https://lab.zalastack.com/alt-text-checker/favicon.svg" alt="logo"></a>',
       '  <button><svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 105 14l5 5 1-1-5-5A8 8 0 0010 2z"/></svg></button>',
       '</header>',
       '<img src="/uploads/IMG_4032.jpg">',

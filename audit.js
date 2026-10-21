@@ -360,7 +360,7 @@ function altOverlay(items, csv, audit) {
   var foot = mk('div', 'f');
   foot.appendChild(document.createTextNode('Runs only in this tab. Nothing is sent anywhere. '));
   var fl = mk('a', '', 'Alt text guide');
-  fl.href = 'https://mizoz.github.io/alt-text-checker/#guide';
+  fl.href = 'https://lab.zalastack.com/alt-text-checker/#guide';
   fl.target = '_blank';
   fl.rel = 'noopener';
   foot.appendChild(fl);

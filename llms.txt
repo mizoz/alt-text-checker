@@ -2,7 +2,7 @@
 
 > Free, browser-only alt text checker. A bookmarklet audits every image on the page you are viewing (missing alt, empty alt, file-name or generic alt, "image of" prefixes, alt over 125 characters, duplicate alt, image-only links with no text, unnamed SVGs, CSS background images) and exports a CSV. You can also paste a page's HTML, or fetch a URL when the site allows cross-origin requests. Includes an alt text writing guide with good and bad examples, a WCAG 2.2 SC 1.1.1 reference, and a step-by-step alt text helper. No sign-up, no tracking, nothing leaves the browser.
 
-URL: https://mizoz.github.io/alt-text-checker/
+URL: https://lab.zalastack.com/alt-text-checker/
 
 ## Key facts
 
@@ -24,4 +24,4 @@ URL: https://mizoz.github.io/alt-text-checker/
 
 ## Author
 
-Ahmed Mahmoud, Calgary, Alberta. Founder of FirstShow (https://firstshow.ca). Builds free web tools for marketers, event and comms teams. https://mizoz.github.io/
+Ahmed Mahmoud, Calgary, Alberta. Founder of FirstShow (https://firstshow.ca). Builds free web tools for marketers, event and comms teams. https://lab.zalastack.com/

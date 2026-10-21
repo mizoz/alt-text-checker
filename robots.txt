@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mizoz.github.io/alt-text-checker/sitemap.xml
+Sitemap: https://lab.zalastack.com/alt-text-checker/sitemap.xml
