@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alt Text Checker: Find Missing Alt Text on Any Page</title>
+<meta name="description" content="Free alt text checker. Find images with missing or weak alt text on any page, export a CSV, and learn how to write good alt text. No sign-up.">
+<link rel="canonical" href="https://mizoz.github.io/alt-text-checker/">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Alt Text Checker: find missing alt text on any page">
+<meta property="og:description" content="Check every image on a page for missing, empty or weak alt text, export a CSV, and write better alt text. Free, no sign-up.">
+<meta property="og:url" content="https://mizoz.github.io/alt-text-checker/">
+<meta property="og:image" content="https://mizoz.github.io/alt-text-checker/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Alt Text Checker: find images missing alt text on any page and write better alt text">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alt Text Checker: find missing alt text on any page">
+<meta name="twitter:description" content="Check every image on a page for missing, empty or weak alt text. Free, no sign-up.">
+<meta name="twitter:image" content="https://mizoz.github.io/alt-text-checker/og.png">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Alt Text Checker",
+      "url": "https://mizoz.github.io/alt-text-checker/",
+      "description": "Find images missing alt text on any page and write better alt text. Bookmarklet, paste-HTML audit, CSV export, writing guide and WCAG 2.2 reference.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CAD"},
+      "datePublished": "2026-10-21",
+      "author": {"@type":"Person","name":"Ahmed Mahmoud","url":"https://mizoz.github.io/","jobTitle":"Founder, FirstShow","address":{"@type":"PostalAddress","addressLocality":"Calgary","addressRegion":"AB","addressCountry":"CA"},"sameAs":["https://github.com/mizoz","https://www.linkedin.com/in/ahmed-m-82ba28169/","https://firstshow.ca"]}
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to check a web page for missing alt text",
+      "step": [
+        {"@type": "HowToStep", "name": "Add the bookmarklet", "text": "Drag the Check alt text button to your bookmarks bar."},
+        {"@type": "HowToStep", "name": "Open the page", "text": "Go to the page you want to check and click the bookmark."},
+        {"@type": "HowToStep", "name": "Review the report", "text": "A panel lists every image with errors, warnings and notes. Use Show on page to find each one."},
+        {"@type": "HowToStep", "name": "Export and fix", "text": "Download the CSV, then rewrite weak alt text using the guide and the alt text helper."}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How do I check a page for missing alt text?", "acceptedAnswer": {"@type": "Answer", "text": "Drag the Check alt text bookmarklet to your bookmarks bar, open the page and click it. It lists every image, flags missing or weak alt text and lets you jump to each image. You can also paste a page's HTML into the Paste HTML tab."}},
+        {"@type": "Question", "name": "Is empty alt text (alt=\"\") an error?", "acceptedAnswer": {"@type": "Answer", "text": "No. alt=\"\" tells screen readers to skip the image, which is correct for decoration. It is a problem when the image carries meaning, or when it is the only thing inside a link or button, because then the link has no name."}},
+        {"@type": "Question", "name": "How long should alt text be?", "acceptedAnswer": {"@type": "Answer", "text": "As short as it can be while still doing the job. WCAG sets no limit. Around 125 characters is a common rule of thumb; if you need more, put the detail in a caption or nearby text."}},
+        {"@type": "Question", "name": "Should alt text start with \"image of\" or \"photo of\"?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. Screen readers already announce it as an image. Mention the medium only when it matters, like a painting, a screenshot or a diagram."}},
+        {"@type": "Question", "name": "What alt text should a logo have?", "acceptedAnswer": {"@type": "Answer", "text": "The organization's name. If the logo links to the home page, use the name plus where it goes, like \"FirstShow home\". If the name is already written right next to it, use alt=\"\"."}},
+        {"@type": "Question", "name": "Do background images need alt text?", "acceptedAnswer": {"@type": "Answer", "text": "CSS background images cannot have alt text, so screen readers skip them. That is fine for decoration. If a background carries meaning, put that meaning in real text on the page or use an img element with alt."}},
+        {"@type": "Question", "name": "Why can't this tool check any URL I type in?", "acceptedAnswer": {"@type": "Answer", "text": "Browsers stop one website from reading another website's pages unless that site allows it (CORS). Most sites don't. The bookmarklet gets around this because it runs on the page you are already viewing."}},
+        {"@type": "Question", "name": "Does this tool send my HTML or my page anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. The audit runs in your browser. There is no server, no account and no analytics. Thumbnails in the report load straight from where the images are hosted, and you can turn them off."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Alt text checker</h1>
+    <p>Check every image on a page for missing, empty or weak alt text, export the list as a CSV, then fix it with the writing guide and helper below.</p>
+    <p class="privacy"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3zm0 2.2 6 2.2V11c0 4-2.6 7.8-6 8.9C8.6 18.8 6 15 6 11V6.4l6-2.2z"/></svg>Runs in your browser. Nothing you paste or check is sent anywhere.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel" aria-labelledby="tool-h">
+    <h2 id="tool-h" class="sr-only">Check alt text</h2>
+    <div class="tabs" role="tablist" aria-label="How to check">
+      <button role="tab" id="tab-bm" aria-controls="pane-bm" aria-selected="true">Bookmarklet</button>
+      <button role="tab" id="tab-paste" aria-controls="pane-paste" aria-selected="false" tabindex="-1">Paste HTML</button>
+      <button role="tab" id="tab-url" aria-controls="pane-url" aria-selected="false" tabindex="-1">Check a URL</button>
+    </div>
+
+    <div role="tabpanel" id="pane-bm" aria-labelledby="tab-bm">
+      <p>The most reliable way. It runs on the page you are looking at, after scripts and lazy-loaded images have loaded, so it sees what visitors see.</p>
+      <div class="bm-box">
+        <a class="bookmarklet" id="bookmarklet" href="#">Check alt text</a>
+        <span class="hint">Drag this button to your bookmarks bar. Clicking it here runs a demo on this page.</span>
+      </div>
+      <ol class="steps">
+        <li>Show your bookmarks bar (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>, or <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> on a Mac).</li>
+        <li>Drag the <strong>Check alt text</strong> button onto it.</li>
+        <li>Open any page and click the bookmark. A panel lists every image; press <kbd>Esc</kbd> to close it.</li>
+      </ol>
+      <p class="hint">On a phone, or if dragging doesn't work: <button class="btn" id="copy-bm" type="button">Copy bookmarklet code</button>, then add a new bookmark and paste the code as its URL. A few sites with strict security settings block bookmarklets; use Paste HTML for those.</p>
+      <p id="bm-msg" class="msg" role="status"></p>
+    </div>
+
+    <div role="tabpanel" id="pane-paste" aria-labelledby="tab-paste" hidden>
+      <label for="html-in">Page HTML</label>
+      <p class="hint">Open the page, press <kbd>Ctrl</kbd>+<kbd>U</kbd> (or right-click, View Page Source), select all and paste here. For pages built by JavaScript, use your browser's dev tools: right-click the <code>&lt;html&gt;</code> element, Copy, Copy outerHTML.</p>
+      <textarea id="html-in" class="mono" spellcheck="false" placeholder="<html>...</html> or any snippet with <img> tags"></textarea>
+      <div class="row" style="margin-top:10px">
+        <div class="grow">
+          <label for="base-in">Page URL <span class="hint">(optional, fixes relative image paths for thumbnails)</span></label>
+          <input type="url" id="base-in" placeholder="https://example.com/blog/post" inputmode="url" autocomplete="url">
+        </div>
+      </div>
+      <div class="btns">
+        <button class="btn primary" id="run-paste" type="button">Check HTML</button>
+        <button class="btn" id="load-example" type="button">Load an example</button>
+        <button class="btn" id="clear-paste" type="button">Clear</button>
+      </div>
+      <p id="paste-msg" class="msg" role="status"></p>
+    </div>
+
+    <div role="tabpanel" id="pane-url" aria-labelledby="tab-url" hidden>
+      <label for="url-in">Page URL</label>
+      <div class="row">
+        <div class="grow"><input type="url" id="url-in" placeholder="https://example.com/" inputmode="url" autocomplete="url"></div>
+        <button class="btn primary" id="run-url" type="button">Fetch and check</button>
+      </div>
+      <p class="hint">Honest warning: most sites won't allow this. Browsers block one site from reading another site's pages unless the other site opts in (that's called CORS). When it's blocked you'll see why, and the bookmarklet or Paste HTML will still work. Your browser contacts that site directly; there's no server of mine in between.</p>
+      <p id="url-msg" class="msg" role="status"></p>
+    </div>
+  </section>
+
+  <section class="panel" id="report" aria-labelledby="report-h" hidden>
+    <h2 id="report-h">Report</h2>
+    <p id="report-src" class="hint"></p>
+    <div class="summary" id="summary"></div>
+    <div class="report-tools">
+      <label for="filter" class="sr-only">Show</label>
+      <select id="filter">
+        <option value="all">Show all</option>
+        <option value="problems">Errors + warnings</option>
+        <option value="error">Errors only</option>
+        <option value="warn">Warnings only</option>
+        <option value="note">Notes only</option>
+        <option value="ok">OK only</option>
+      </select>
+      <label class="check"><input type="checkbox" id="thumbs" checked> Show thumbnails</label>
+      <button class="btn" id="dl-csv" type="button">Download CSV</button>
+      <button class="btn" id="copy-csv" type="button">Copy CSV</button>
+    </div>
+    <p class="hint">Thumbnails load straight from where each image is hosted. Images with relative paths only show if you add the page URL.</p>
+    <p id="csv-msg" class="msg" role="status"></p>
+    <ul class="items" id="items"></ul>
+  </section>
+
+  <section class="panel" id="helper" aria-labelledby="helper-h">
+    <h2 id="helper-h">Alt text helper</h2>
+    <p class="hint">Answer a few questions and get a draft you can edit. No image recognition here: you know why the image is on your page, a machine doesn't.</p>
+    <form id="helper-form" onsubmit="return false">
+      <fieldset>
+        <legend>1. What is this image doing on the page?</legend>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="kind" value="informative" checked><span>Shows something<small>A photo or illustration the reader should know about</small></span></label>
+          <label class="choice"><input type="radio" name="kind" value="decorative"><span>Just decoration<small>Looks nice, or repeats text that's already there</small></span></label>
+          <label class="choice"><input type="radio" name="kind" value="functional"><span>It's a link or button<small>Clicking it does something</small></span></label>
+          <label class="choice"><input type="radio" name="kind" value="text"><span>It's mostly text<small>Quote card, poster, promo graphic</small></span></label>
+          <label class="choice"><input type="radio" name="kind" value="chart"><span>Chart, graph or diagram<small>It shows data or a process</small></span></label>
+          <label class="choice"><input type="radio" name="kind" value="logo"><span>A logo<small>Your brand or a partner's</small></span></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. The details</legend>
+        <div data-for="informative">
+          <div class="field">
+            <label for="h-what">What's in it that matters here?</label>
+            <input type="text" id="h-what" placeholder="Volunteers handing out programs at the theatre entrance">
+            <p class="hint">Who or what, doing what. Skip "image of".</p>
+          </div>
+          <div class="field">
+            <label for="h-detail">Any detail that matters for this page? <span class="hint">(optional)</span></label>
+            <input type="text" id="h-detail" placeholder="in matching red festival shirts">
+          </div>
+          <div class="field">
+            <label for="h-why">Why is it on this page? <span class="hint">(optional, just for you)</span></label>
+            <input type="text" id="h-why" placeholder="To show the event is run by volunteers">
+            <p class="hint">Use this to check your alt: it should support this point, not describe every pixel.</p>
+          </div>
+        </div>
+        <div data-for="functional" hidden>
+          <div class="field">
+            <label for="h-action">Where does it go, or what does it do?</label>
+            <input type="text" id="h-action" placeholder="Search / Download the 2026 program (PDF) / Open menu">
+            <p class="hint">Describe the action or destination, not the picture. A magnifying glass is "Search".</p>
+          </div>
+          <label class="inline-check"><input type="checkbox" id="h-linktext"> The same link or button already has visible text</label>
+        </div>
+        <div data-for="text" hidden>
+          <div class="field">
+            <label for="h-text">Type the text in the image, as it appears</label>
+            <input type="text" id="h-text" placeholder="Early bird tickets end Friday">
+          </div>
+          <label class="inline-check"><input type="checkbox" id="h-textdup"> The same text is already written on the page right next to it</label>
+        </div>
+        <div data-for="chart" hidden>
+          <div class="field">
+            <label for="h-ctype">What kind of chart?</label>
+            <input type="text" id="h-ctype" placeholder="Bar chart">
+          </div>
+          <div class="field">
+            <label for="h-takeaway">The one-sentence takeaway</label>
+            <input type="text" id="h-takeaway" placeholder="ticket sales doubled from March to May">
+          </div>
+          <div class="field">
+            <label for="h-data">Where are the full numbers? <span class="hint">(optional)</span></label>
+            <input type="text" id="h-data" placeholder="the table below">
+            <p class="hint">Alt text can't hold a whole dataset. Put the numbers in a table or text and point to it.</p>
+          </div>
+        </div>
+        <div data-for="logo" hidden>
+          <div class="field">
+            <label for="h-org">Organization name</label>
+            <input type="text" id="h-org" placeholder="FirstShow">
+          </div>
+          <label class="inline-check"><input type="checkbox" id="h-logolink"> It links to that organization's home page</label>
+          <label class="inline-check"><input type="checkbox" id="h-logodup"> The name is already written right next to it</label>
+        </div>
+        <div data-for="decorative" hidden>
+          <p>Nothing to fill in. Decorative images get an empty alt so screen readers skip them. Don't leave the attribute out; that's different, and some screen readers will read the file name instead.</p>
+        </div>
+      </fieldset>
+
+      <div class="out" aria-live="polite">
+        <label for="h-out">Your alt text (edit freely)</label>
+        <textarea id="h-out" class="mono" rows="3"></textarea>
+        <p class="hint"><span id="h-count">0</span> characters</p>
+        <label for="h-html">HTML</label>
+        <textarea id="h-html" class="mono" rows="2" readonly></textarea>
+        <div class="btns">
+          <button class="btn primary" type="button" id="copy-alt">Copy alt text</button>
+          <button class="btn" type="button" id="copy-html">Copy HTML</button>
+          <button class="btn" type="button" id="reset-helper">Start over</button>
+        </div>
+        <p id="h-msg" class="msg" role="status"></p>
+        <ul class="lint" id="h-lint"></ul>
+      </div>
+    </form>
+  </section>
+
+  <section class="content" id="about">
+    <h2>A free alt text checker that works on any page</h2>
+    <p>Alt text is the description a screen reader reads out in place of an image. It also shows up when an image fails to load, and search engines use it to understand what an image is about. Most sites have a few images with no alt at all, a lot with alt text like <code>IMG_4032.jpg</code> or <code>image</code>, and some links that are only an icon with nothing for a screen reader to say.</p>
+    <p>This tool finds those. It checks <code>&lt;img&gt;</code>, inline <code>&lt;svg&gt;</code>, image buttons, image map areas, <code>role="img"</code> elements and CSS background images, then tells you what is missing and what's weak. It can't judge whether a description is <em>good</em> for your context; that part is on you, and the guide below helps.</p>
+
+    <h2 id="how">How to check missing alt text</h2>
+    <ol class="steps">
+      <li><strong>Add the bookmarklet.</strong> Drag the <em>Check alt text</em> button to your bookmarks bar.</li>
+      <li><strong>Open the page.</strong> Go to the page you want to check and click the bookmark.</li>
+      <li><strong>Review the report.</strong> Errors first, then warnings. <em>Show on page</em> scrolls to each image and outlines it.</li>
+      <li><strong>Export and fix.</strong> Download the CSV for your team or CMS, and rewrite weak alt text with the helper.</li>
+    </ol>
+
+    <h3>What each result means</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Result</th><th scope="col">Check</th><th scope="col">Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge error">Error</span></td><td>No <code>alt</code> attribute</td><td>Screen readers may read the file name or URL. Fails WCAG 1.1.1.</td></tr>
+          <tr><td><span class="badge error">Error</span></td><td>Image is the only thing in a link or button, and has no alt text</td><td>The link has no name; people hear "link" and nothing else. WCAG 1.1.1, 2.4.4, 4.1.2.</td></tr>
+          <tr><td><span class="badge error">Error</span></td><td>Image button, map area or <code>role="img"</code> with no text</td><td>Controls need a name that says what they do. WCAG 1.1.1, 4.1.2.</td></tr>
+          <tr><td><span class="badge warn">Warning</span></td><td>Alt looks like a file name (<code>DSC_0042.jpg</code>)</td><td>Present, but useless to anyone listening.</td></tr>
+          <tr><td><span class="badge warn">Warning</span></td><td>Generic alt (<code>image</code>, <code>photo</code>, <code>logo</code>, <code>icon</code>)</td><td>Says it's an image, which the screen reader already said.</td></tr>
+          <tr><td><span class="badge warn">Warning</span></td><td>Starts with "image of" / "photo of"</td><td>Redundant. Mention the medium only if it matters.</td></tr>
+          <tr><td><span class="badge warn">Warning</span></td><td>Longer than 125 characters</td><td>A rule of thumb, not a WCAG rule. Long descriptions are tiring to listen to and can't be paused or skimmed easily.</td></tr>
+          <tr><td><span class="badge warn">Warning</span></td><td>Inline SVG with no name and not hidden</td><td>Screen readers may skip it or read something odd. Name it or hide it.</td></tr>
+          <tr><td><span class="badge note">Note</span></td><td>Empty alt (<code>alt=""</code>)</td><td>Correct for decoration. Double-check it really is decoration.</td></tr>
+          <tr><td><span class="badge note">Note</span></td><td>Same alt on different images</td><td>Fine for repeated icons. Different photos usually need different descriptions.</td></tr>
+          <tr><td><span class="badge note">Note</span></td><td>Alt repeats the link text or caption</td><td>It gets read twice. Use <code>alt=""</code> or make them say different things.</td></tr>
+          <tr><td><span class="badge note">Note</span></td><td>CSS background image</td><td>Can't have alt. Fine for decoration; meaningful content should be real text or an <code>&lt;img&gt;</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="content" id="guide">
+    <h2>How to write alt text</h2>
+    <p>Ask one question: <strong>if this image didn't load, what would the reader need to be told?</strong> The answer depends on why the image is there, not just what's in it. The same photo of a stage can be "Speaker Maya Chen opening the 2026 summit" on a news post and <code>alt=""</code> on a page where it's just a banner.</p>
+    <ul>
+      <li>Be specific and brief. Lead with what matters.</li>
+      <li>Don't start with "image of" or "picture of". Do say "Screenshot", "Painting" or "Diagram" when the medium matters.</li>
+      <li>Don't stuff keywords. Write for people; search engines read it the same way.</li>
+      <li>Write it like a sentence. End with a period so screen readers pause.</li>
+      <li>If an image is a link or button, describe what it does, not what it looks like.</li>
+      <li>Decorative? Use <code>alt=""</code>. Never leave the attribute out.</li>
+    </ul>
+
+    <h3>Alt text examples: good and bad</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Image type</th><th scope="col">Bad</th><th scope="col">Good</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Informative</strong>: event photo in a recap post</td><td><span class="bad">Bad:</span> <code>alt="IMG_4032.jpg"</code><br><span class="bad">Bad:</span> <code>alt="photo of people"</code></td><td><span class="good">Good:</span> <code>alt="A full theatre giving the closing speaker a standing ovation."</code></td></tr>
+          <tr><td><strong>Decorative</strong>: a swirl divider between sections</td><td><span class="bad">Bad:</span> <code>alt="decorative swirl divider"</code><br><span class="bad">Bad:</span> no alt attribute</td><td><span class="good">Good:</span> <code>alt=""</code></td></tr>
+          <tr><td><strong>Decorative</strong>: photo next to text that says the same thing</td><td><span class="bad">Bad:</span> repeating the heading in the alt</td><td><span class="good">Good:</span> <code>alt=""</code></td></tr>
+          <tr><td><strong>Functional</strong>: magnifying glass search button</td><td><span class="bad">Bad:</span> <code>alt="magnifying glass"</code></td><td><span class="good">Good:</span> <code>alt="Search"</code></td></tr>
+          <tr><td><strong>Functional</strong>: PDF icon that downloads the program</td><td><span class="bad">Bad:</span> <code>alt="pdf icon"</code></td><td><span class="good">Good:</span> <code>alt="Download the 2026 program (PDF)"</code></td></tr>
+          <tr><td><strong>Logo</strong> linking to the home page</td><td><span class="bad">Bad:</span> <code>alt="logo"</code><br><span class="bad">Bad:</span> <code>alt="FirstShow logo red and white"</code></td><td><span class="good">Good:</span> <code>alt="FirstShow home"</code></td></tr>
+          <tr><td><strong>Logo</strong> in a sponsor row, not linked</td><td><span class="bad">Bad:</span> <code>alt="sponsor"</code></td><td><span class="good">Good:</span> <code>alt="Bow River Coffee Co."</code> (the sponsor's name)</td></tr>
+          <tr><td><strong>Text in image</strong>: promo graphic</td><td><span class="bad">Bad:</span> <code>alt="promo banner"</code></td><td><span class="good">Good:</span> <code>alt="Early bird tickets end Friday. Save 20% with code EARLY."</code> (the exact words)</td></tr>
+          <tr><td><strong>Chart</strong> in a report</td><td><span class="bad">Bad:</span> <code>alt="chart"</code><br><span class="bad">Bad:</span> every data point in the alt</td><td><span class="good">Good:</span> <code>alt="Line chart: ticket sales doubled from March to May. Full numbers in the table below."</code></td></tr>
+          <tr><td><strong>Complex diagram</strong>: org chart, map, flowchart</td><td><span class="bad">Bad:</span> a 600-character alt</td><td><span class="good">Good:</span> short alt naming it (<code>alt="Org chart of the festival team"</code>) plus the full structure as a list or text on the page</td></tr>
+          <tr><td><strong>Headshot</strong> on a speaker page</td><td><span class="bad">Bad:</span> <code>alt="headshot"</code></td><td><span class="good">Good:</span> <code>alt="Maya Chen"</code>, or <code>alt=""</code> if her name is the caption right below</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Decorative vs informative vs functional images</h3>
+    <p><strong>Informative</strong> images add information: describe that information. <strong>Decorative</strong> images add nothing a reader would miss: <code>alt=""</code>. <strong>Functional</strong> images are links or buttons: describe the action or destination. When you're torn between informative and decorative, ask whether a blind reader would be missing out on something. If not, it's decorative. The <a href="https://www.w3.org/WAI/tutorials/images/decision-tree/">W3C alt decision tree</a> walks through edge cases.</p>
+
+    <h3>Text in images</h3>
+    <p>If an image contains text that matters, the alt needs those words. Better still, put the text in real HTML: it scales, translates, and works for everyone. WCAG 1.4.5 asks you to avoid images of text where real text can do the job (logos are the exception).</p>
+  </section>
+
+  <section class="content" id="wcag">
+    <h2>WCAG 2.2 alt text requirements (1.1.1 Non-text Content)</h2>
+    <p><strong>Success Criterion 1.1.1 Non-text Content, Level A.</strong> Every image, icon, chart or other non-text content shown to users needs a text alternative that does the same job as the original. The exceptions, in plain words:</p>
+    <ul>
+      <li><strong>Controls and inputs</strong> need a name that says what they do (an icon button needs a label).</li>
+      <li><strong>Time-based media</strong>, <strong>tests</strong> and <strong>sensory experiences</strong> (like a piece of music or art) need at least a text label that identifies them.</li>
+      <li><strong>CAPTCHAs</strong> need text saying what they are, plus an alternative that uses a different sense.</li>
+      <li><strong>Decoration, formatting and invisible images</strong> must be hidden from assistive technology, for example with <code>alt=""</code>.</li>
+    </ul>
+    <p>Read the official wording in <a href="https://www.w3.org/TR/WCAG22/#non-text-content">WCAG 2.2</a> and the explanation in <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html">Understanding SC 1.1.1</a>.</p>
+    <h3>Related success criteria</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Criterion</th><th scope="col">Level</th><th scope="col">What it means for images</th></tr></thead>
+        <tbody>
+          <tr><td>1.1.1 Non-text Content</td><td>A</td><td>Text alternative for every meaningful image; decoration hidden.</td></tr>
+          <tr><td>1.4.5 Images of Text</td><td>AA</td><td>Use real text instead of pictures of text, except logos and where the look is essential.</td></tr>
+          <tr><td>1.4.9 Images of Text (No Exception)</td><td>AAA</td><td>Images of text only for decoration or where the look is essential.</td></tr>
+          <tr><td>2.4.4 Link Purpose (In Context)</td><td>A</td><td>An image link's alt has to make its destination clear.</td></tr>
+          <tr><td>4.1.2 Name, Role, Value</td><td>A</td><td>Image buttons and icon links need an accessible name.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hint">WCAG doesn't set a character limit for alt text. The 125-character warning in this checker is a widely used rule of thumb.</p>
+  </section>
+
+  <section class="content faq" id="faq">
+    <h2>Image accessibility FAQ</h2>
+    <details><summary><h3>How do I check a page for missing alt text?</h3></summary><p>Drag the <em>Check alt text</em> bookmarklet to your bookmarks bar, open the page and click it. It lists every image, flags missing or weak alt text and lets you jump to each image. You can also paste a page's HTML into the Paste HTML tab.</p></details>
+    <details><summary><h3>Is empty alt text (alt="") an error?</h3></summary><p>No. <code>alt=""</code> tells screen readers to skip the image, which is correct for decoration. It is a problem when the image carries meaning, or when it is the only thing inside a link or button, because then the link has no name.</p></details>
+    <details><summary><h3>How long should alt text be?</h3></summary><p>As short as it can be while still doing the job. WCAG sets no limit. Around 125 characters is a common rule of thumb; if you need more, put the detail in a caption or nearby text.</p></details>
+    <details><summary><h3>Should alt text start with "image of" or "photo of"?</h3></summary><p>Usually not. Screen readers already announce it as an image. Mention the medium only when it matters, like a painting, a screenshot or a diagram.</p></details>
+    <details><summary><h3>What alt text should a logo have?</h3></summary><p>The organization's name. If the logo links to the home page, use the name plus where it goes, like "FirstShow home". If the name is already written right next to it, use <code>alt=""</code>.</p></details>
+    <details><summary><h3>Do background images need alt text?</h3></summary><p>CSS background images cannot have alt text, so screen readers skip them. That is fine for decoration. If a background carries meaning, put that meaning in real text on the page or use an <code>&lt;img&gt;</code> element with alt.</p></details>
+    <details><summary><h3>Why can't this tool check any URL I type in?</h3></summary><p>Browsers stop one website from reading another website's pages unless that site allows it (CORS). Most sites don't. The bookmarklet gets around this because it runs on the page you are already viewing.</p></details>
+    <details><summary><h3>Does this tool send my HTML or my page anywhere?</h3></summary><p>No. The audit runs in your browser. There is no server, no account and no analytics. Thumbnails in the report load straight from where the images are hosted, and you can turn them off.</p></details>
+    <p class="hint">Last updated October 2026.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Made by <a href="https://mizoz.github.io/">Ahmed Mahmoud in Calgary</a>. Free, no sign-up, no tracking. <a href="https://github.com/mizoz/alt-text-checker">Source on GitHub</a>.</p>
+    <p>More free tools:</p>
+    <ul>
+      <li><a href="https://mizoz.github.io/social-image-sizer/">Social image sizer</a></li>
+      <li><a href="https://mizoz.github.io/utm-builder/">UTM builder</a></li>
+      <li><a href="https://mizoz.github.io/post-preview/">Post preview</a></li>
+      <li><a href="https://mizoz.github.io/sponsorship-builder/">Sponsorship builder</a></li>
+      <li><a href="https://mizoz.github.io/stream-calc/">Stream bitrate calculator</a></li>
+      <li><a href="https://mizoz.github.io/run-of-show/">Run of show builder</a></li>
+      <li><a href="https://mizoz.github.io/email-signature/">Email signature generator</a></li>
+      <li><a href="https://mizoz.github.io/og-preview/">Link preview and OG tags</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="audit.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
